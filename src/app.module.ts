@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { LoadersModule } from './loaders/loaders.module';
 
 @Module({
   imports: [
@@ -26,6 +27,8 @@ import { join } from 'path';
       }),
       inject: [ConfigService],
     }),
+
+    LoadersModule,
   ],
   controllers: [],
   providers: [],
