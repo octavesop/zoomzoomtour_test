@@ -1,0 +1,17 @@
+# docker가 설치된 경우
+# 다음 명령어를 터미널에 입력하면 3306번으로 mysql이 서비스됩니다.
+
+# docker-compose -f mysql-docker-compose.yml up
+
+version: '3.1'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci

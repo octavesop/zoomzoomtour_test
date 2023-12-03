@@ -1,0 +1,24 @@
+# k8s 환경이며 helm이 설치된 경우
+# 다음 명령어를 터미널에 입력하면 6379번으로 redis가 서비스됩니다.
+
+# helm repo add bitnami https://charts.bitnami.com/bitnami
+# helm repo update
+# helm install my-redis -f ./helm/redis.values.yaml bitnami/redis
+# kubectl port-forward service/my-redis 6379:6379
+
+
+global:
+  redis:
+    password: 'test' #이곳에 적절한 비밀번호를 입력하세요.
+
+architecture: replication
+auth:
+  enabled: true
+  sentinel: true
+  password: 'test' #이곳에 적절한 비밀번호를 입력하세요.
+
+sentinel:
+  enabled: false
+  containerPorts:
+    sentinel: 26379
+  masterSet: mymaster

@@ -1,0 +1,19 @@
+# docker가 설치된 경우
+# 다음 명령어를 터미널에 입력하면 6379번으로 redis가 서비스됩니다.
+
+# docker-compose -f redis-docker-compose.yml up
+
+# 비밀번호 없이 서비스하고 싶다면 services.command 부분의 "--requirepass ${password}" 부분을 지우면 됩니다.
+
+version: '3.1'
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - 6379:6379
+    labels:
+      - 'name=redis'
+      - 'mode=standalone'
+    restart: always
+    command: /bin/sh -c "redis-server --requirepass test" # --requirepass ${password}
