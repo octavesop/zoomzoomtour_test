@@ -6,14 +6,14 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AccessTokenInvalidException } from 'src/exceptions/accessTokenInvalid.exception';
 import { User } from '../../user/entities/user.entity';
 import { Payload } from '../dto/payload.dto';
-import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   private readonly logger = new Logger(JwtStrategy.name);
 
   constructor(
-    private readonly authService: AuthService,
+    private readonly userService: UserService,
     protected readonly configService: ConfigService,
   ) {
     super({
@@ -31,7 +31,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: Payload): Promise<User> {
     try {
-      const result = await this.authService.findUserByUserUid(payload.userUid);
+      const result = await this.userService.findUserByUserUid(payload.userUid);
       return result;
     } catch (error) {
       this.logger.error(error);

@@ -25,6 +25,25 @@ export class UserService {
     return await bcrypt.compare(value, hashedValue);
   }
 
+  async findUserByUserUid(userUid: number): Promise<User> {
+    try {
+      const foundUser = await this.userRepository.findOne({
+        where: {
+          userUid: userUid,
+        },
+      });
+
+      if (!foundUser) {
+        throw new NotExistUserException();
+      }
+
+      return foundUser;
+    } catch (error) {
+      this.logger.error(error);
+      throw error;
+    }
+  }
+
   async signUp(request: SignUpRequest): Promise<User> {
     try {
       const isIdExist = await this.userRepository.findOne({
