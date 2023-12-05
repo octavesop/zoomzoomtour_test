@@ -1,9 +1,12 @@
+import { Tour } from 'src/modules/tour/entities/tour.entity';
+import { User } from 'src/modules/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
   Generated,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -29,6 +32,9 @@ export class Reservation {
   })
   status: ReservationStatus;
 
+  @Column({ name: 'date', type: 'date' })
+  date: string;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
@@ -37,4 +43,16 @@ export class Reservation {
 
   @DeleteDateColumn({ name: 'deleted_at', default: null })
   deletedAt: Date;
+
+  @ManyToOne(() => User, (user) => user.reservation, {
+    onDelete: 'RESTRICT',
+    nullable: false,
+  })
+  user: User;
+
+  @ManyToOne(() => Tour, (tour) => tour.reservation, {
+    onDelete: 'RESTRICT',
+    nullable: false,
+  })
+  tour: Tour;
 }

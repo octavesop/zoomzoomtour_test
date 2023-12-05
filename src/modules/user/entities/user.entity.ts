@@ -1,9 +1,11 @@
 import { Exclude } from 'class-transformer';
+import { Reservation } from 'src/modules/reservation/entities/reservation.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -40,4 +42,9 @@ export class User {
 
   @DeleteDateColumn({ name: 'deleted_at', default: null })
   deletedAt: Date;
+
+  @OneToMany(() => Reservation, (reservation) => reservation.user, {
+    nullable: false,
+  })
+  reservation: Reservation[];
 }

@@ -1,3 +1,4 @@
+import { Reservation } from 'src/modules/reservation/entities/reservation.entity';
 import { Seller } from 'src/modules/seller/entities/seller.entity';
 import {
   Column,
@@ -5,6 +6,7 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -40,4 +42,9 @@ export class Tour {
     nullable: true,
   })
   seller?: Seller;
+
+  @OneToMany(() => Reservation, (reservation) => reservation.tour, {
+    nullable: false,
+  })
+  reservation: Reservation[];
 }

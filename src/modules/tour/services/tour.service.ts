@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NotFoundTourException } from 'src/exceptions/notFoundTour.exception';
 import { SellerService } from 'src/modules/seller/services/seller.service';
@@ -11,6 +11,8 @@ import { Tour } from '../entities/tour.entity';
 @Injectable()
 export class TourService {
   constructor(
+    @Inject('RedisConnectionProvider')
+    private readonly RedisConnectionProvider,
     @InjectRepository(Tour)
     private readonly tourRepository: Repository<Tour>,
     private readonly sellerService: SellerService,
