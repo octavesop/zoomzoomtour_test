@@ -1,73 +1,44 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# 줌줌투어 코딩 테스트
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+---
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 정보
+- `http://{host}:{port}/docs` 에서 swagger 문서를 확인할 수 있습니다.
+- `{src}/dependencies/*` 디렉토리에 로컬용으로 mysql, redis의 docker 및 kubernetes 설정 파일을 올려두었습니다(별도의 튜닝 등은 없이 단순히 구동 목적입니다).
 
-## Description
+<br>
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
+## Initial
 ```bash
+
 $ npm install
-```
 
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
+$ (env 파일은 함께 첨부)
+
 ```
 
-## Test
+<br>
 
-```bash
-# unit tests
-$ npm run test
+## 추가한 기능
 
-# e2e tests
-$ npm run test:e2e
+### 날씨 및 권장 복장 기능
 
-# test coverage
-$ npm run test:cov
-```
+1. 투어나 여행의 경우 날씨(특히 악천후)에 의해 많은 영향을 받으므로 캘린더로 날짜를 선택할 경우 관련 날씨를 하단 뷰 등에 브라우징해주면 날짜를 선택하는데 도움을 받을 것으로 생각했습니다.
 
-## Support
+2. 구현은 [OWM](https://openweathermap.org/) 같은 전세계 날씨 OpenAPI 서비스 등을 기반으로 진행하려 했습니다.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+3. 그러나 날씨값의 가장 큰 문제점은 단기적 데이터일 때만 가치가 가장 높아 2주를 넘기면 데이터의 신뢰성이 너무 낮아져 선택 시 좋은 기준으로 작용하기 힘든 점으로 판단했습니다.
 
-## Stay in touch
+4. 때문에 받은 데이터를 기준으로 하여 1주일 미만의 가까운 일정인 경우 날씨값을, 만일 그렇지 않은 경우 해당 국가의 평균 온도나 기후를 설명하여 짐을 준비하거나 여행 일정을 고려할 때 참고할 수 있는 인사이트를 제공해주는 것이 좋을 것 같았습니다.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+5. 가령 '2월에 방콕을 방문하면 너무 춥지는 않을까? 수영장을 쓸 수 있을까?'나 '4월에 도쿄를 방문하면 벚꽃이 많이 피어있을까? 이 시즌엔 달리 축제같은 건 안 하나?' 같은 따로 찾아봐야 하는 내용을 함께 제공하는 방식입니다.
 
-## License
+6. 날씨 같은 직관적인 정보가 아니더라도 추상적으로나마 사용자에게 여행에 필요한 정보를 사용자에게 제공하면 일정 산정의 편리함과 장기적인 날짜를 잡는데도 도움이 되는 정보를 제공해줄 수 있을 것으로 판단했습니다.
 
-Nest is [MIT licensed](LICENSE).
+7. 후자의 데이터는 단순히 평균 기온, 일교차, 일반적 기후 등의 정보만 나열하는 것이 아니라 이 시기의 해당 국가에서의 옷차림, 주요한 축제, 주의할 사항 등 좀 더 직관적으로 다가올 법한 내용을 복합적으로 나열하되 너무 길게 작성하지 않는 마케팅 카드 칼럼 형태의 UI를 생각했습니다(인스타 카드 뉴스와 비슷한 느낌입니다).
+
+8. 때문에 OpenAPI를 사용하지 않고 회사의 브랜드 마케팅에 맞춰 작성하고 관리하는 것이 사용자에게 더 친근하게 다가올 것 같다고 판단했습니다. 수작업이기 때문에 없는 데이터에 대해서는 별도로 표기하지 않고 점진적으로 데이터를 늘릴 수 있을 것 같습니다.
+
+10. 시간이 부족해 구현은 못 하였으나 언젠가 기회가 된다면 에디터 기능을 포함해 추가해보도록 하겠습니다.
