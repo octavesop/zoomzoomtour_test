@@ -1,3 +1,4 @@
+import { Tour } from 'src/modules/tour/entities/tour.entity';
 import { User } from 'src/modules/user/entities/user.entity';
 import {
   Column,
@@ -6,6 +7,7 @@ import {
   Entity,
   Generated,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -45,4 +47,7 @@ export class Seller {
   @JoinColumn({ name: 'user_uid' })
   @Column({ name: 'user_uid' })
   user: User;
+
+  @OneToMany(() => Tour, (tour) => tour.seller, { nullable: false })
+  tour: Tour[];
 }

@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { ApiCreatedResponse, ApiOperation } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AccessTokenConfig } from '../configurations/accessToken.config';
 import { AccessTokenCookieConfig } from '../configurations/accessTokenCookie.config';
@@ -21,6 +21,7 @@ import { User } from '../entities/user.entity';
 import { JwtAuthGuard } from '../guards/jwt.guard';
 import { UserService } from '../services/user.service';
 
+@ApiTags('사용자')
 @Controller('/user')
 export class UserController {
   constructor(

@@ -7,6 +7,7 @@ import { join } from 'path';
 import { HttpExceptionFilter } from './filters/httpException.filter';
 import { LoadersModule } from './loaders/loaders.module';
 import { SellerModule } from './modules/seller/seller.module';
+import { TourModule } from './modules/tour/tour.module';
 import { JwtStrategy } from './modules/user/strategies/jwt.strategy';
 import { UserModule } from './modules/user/user.module';
 
@@ -38,6 +39,7 @@ import { UserModule } from './modules/user/user.module';
     LoadersModule,
     UserModule,
     SellerModule,
+    TourModule,
   ],
   controllers: [],
   providers: [

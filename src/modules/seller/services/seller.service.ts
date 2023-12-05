@@ -37,7 +37,7 @@ export class SellerService {
         where: {
           user: Equal(request.userUid),
         },
-        relations: ['user'],
+        // relations: ['user'],
       });
       if (!foundSeller) {
         throw new NotFoundSellerException();
