@@ -245,7 +245,6 @@ export class TourService {
           };
         }),
       );
-      console.log('돼자...');
       const keys = await this.RedisConnectionProvider.keys(`TOUR:${tourUid}:*`);
       await this.RedisConnectionProvider.del(keys);
       return;
