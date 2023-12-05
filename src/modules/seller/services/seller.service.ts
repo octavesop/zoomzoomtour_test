@@ -14,20 +14,24 @@ export class SellerService {
   ) {}
   private readonly logger = new Logger(Seller.name);
 
-  async registerAsSeller(request: SellerRequest, userInfo: Payload) {
+  async registerAsSeller(
+    request: SellerRequest,
+    userInfo: Payload,
+  ): Promise<void> {
     try {
       await this.sellerRepository.save({
         ...request,
         userUid: userInfo.userUid,
         isActivate: true,
       });
+      return;
     } catch (error) {
       this.logger.error(error);
       throw error;
     }
   }
 
-  async fetchMySellerInfo(request: Payload) {
+  async fetchMySellerInfo(request: Payload): Promise<Seller> {
     try {
       const foundSeller = await this.sellerRepository.findOne({
         where: {

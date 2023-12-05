@@ -4,6 +4,7 @@ import { UserPayload } from 'src/decoraters/userPayload.decorator';
 import { Payload } from 'src/modules/user/dto/payload.dto';
 import { JwtAuthGuard } from 'src/modules/user/guards/jwt.guard';
 import { SellerRequest } from '../dto/sellerRequest.dto';
+import { Seller } from '../entities/seller.entity';
 import { SellerService } from '../services/seller.service';
 
 @UseGuards(JwtAuthGuard)
@@ -13,7 +14,7 @@ export class SellerController {
   constructor(private readonly sellerService: SellerService) {}
   @ApiOperation({ description: '내 판매자 정보를 가져옵니다.' })
   @Get('/me')
-  async fetchMySellerInfo(@UserPayload() userInfo: Payload) {
+  async fetchMySellerInfo(@UserPayload() userInfo: Payload): Promise<Seller> {
     return await this.sellerService.fetchMySellerInfo(userInfo);
   }
 
@@ -22,7 +23,7 @@ export class SellerController {
   async registerAsSeller(
     @Body() request: SellerRequest,
     @UserPayload() userInfo: Payload,
-  ) {
+  ): Promise<void> {
     return await this.sellerService.registerAsSeller(request, userInfo);
   }
 }
