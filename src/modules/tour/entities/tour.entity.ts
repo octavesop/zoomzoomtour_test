@@ -10,6 +10,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { IrregularOffDay } from './irregularOffDay.entity';
 
 @Entity({ name: 'TOUR' })
 export class Tour {
@@ -47,4 +48,9 @@ export class Tour {
     nullable: false,
   })
   reservation: Reservation[];
+
+  @OneToMany(() => IrregularOffDay, (irregularOffDay) => irregularOffDay.tour, {
+    nullable: false,
+  })
+  irregularOffDay: IrregularOffDay[];
 }

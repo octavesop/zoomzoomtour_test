@@ -38,16 +38,16 @@ export class TourController {
   }
 
   @ApiOperation({
-    description: '특정 투어의 예약 가능한 일정을 조회합니다.',
+    description:
+      '특정 투어의 예약 가능한 일정을 조회합니다.(number는 요일값, 0부터 일요일)',
     deprecated: true,
   })
   @Get('/:tourUid/calendar')
-  // TODO any
   async fetchTourCalendar(
     @Param('tourUid') tourUid: number,
     @Query('year') year: number,
     @Query('month') month: number,
-  ): Promise<any> {
+  ): Promise<{ number: number; day: string }[]> {
     return await this.tourService.fetchTourCalendar(tourUid, year, month);
   }
 
@@ -82,18 +82,20 @@ export class TourController {
     return;
   }
 
-  // TODO
   @UseGuards(JwtAuthGuard)
   @ApiOperation({
-    description: '내 투어 프로그램의 휴일을 수정합니다.',
-    deprecated: true,
+    description:
+      '내 투어 프로그램의 휴일을 수정합니다.\nirregular는 `2023-11-22` 형태로 작성.',
   })
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Patch('/seller/:tourUid/calendar')
   async updateTourOff(
+    @Param('tourUid') tourUid: number,
     @Body() request: TourOffRequest,
     @UserPayload() userInfo: Payload,
-  ): Promise<Tour> {
-    return await this.tourService.updateTourOff(request, userInfo);
+  ): Promise<void> {
+    await this.tourService.updateTourOff(tourUid, request, userInfo);
+    return;
   }
 
   @ApiOperation({ description: '내 투어 프로그램을 삭제합니다.' })

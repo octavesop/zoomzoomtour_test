@@ -2,8 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Tour } from './tour.entity';
@@ -22,8 +21,9 @@ export class IrregularOffDay {
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @OneToOne(() => Tour)
-  @JoinColumn({ name: 'tour_uid' })
-  @Column({ name: 'tour_uid' })
+  @ManyToOne(() => Tour, (tour) => tour.irregularOffDay, {
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
   tour: Tour;
 }
