@@ -1,17 +1,20 @@
+import { User } from 'src/modules/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
   Generated,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity({ name: 'SELLER' })
-export class User {
-  constructor(userUid: number) {
-    this.sellerUid = userUid;
+export class Seller {
+  constructor(sellerUid: number) {
+    this.sellerUid = sellerUid;
   }
   @PrimaryGeneratedColumn({ name: 'seller_uid' })
   sellerUid: number;
@@ -37,4 +40,9 @@ export class User {
 
   @DeleteDateColumn({ name: 'deleted_at', default: null })
   deletedAt: Date;
+
+  @OneToOne(() => User)
+  @JoinColumn({ name: 'user_uid' })
+  @Column({ name: 'user_uid' })
+  user: User;
 }
