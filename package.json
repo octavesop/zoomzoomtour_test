@@ -9,7 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "echo \"Error: You should set Environment\" && exit 1",
-    "start:dev": "env-cmd -f .env.development nest start --watch --debug",
+    "start:dev": "env-cmd -f .env.development nest start --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
