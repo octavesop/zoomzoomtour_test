@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_FILTER } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { HttpExceptionFilter } from './filters/httpException.filter';
 import { LoadersModule } from './loaders/loaders.module';
+import { JwtStrategy } from './modules/user/strategies/jwt.strategy';
 
 @Module({
   imports: [
@@ -31,6 +34,12 @@ import { LoadersModule } from './loaders/loaders.module';
     LoadersModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
+    JwtStrategy,
+  ],
 })
 export class AppModule {}
